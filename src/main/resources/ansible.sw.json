@@ -1,0 +1,52 @@
+{
+  "id": "ansible",
+  "version": "1.0",
+  "expressionLang": "jsonpath",
+  "name": "Workflow Ansible example",
+  "description": "An example of how to integrate with Ansible",
+  "start": "finish",
+  "functions": [
+    {
+      "name": "printMessage",
+      "metadata": {
+        "type": "sysout"
+      }
+    },
+    {
+      "name": "triggerAnsible",
+      "operation": "/api/v2/job_templates/7/launch/",
+      "metadata": {
+        "method": "POST",
+        "type": "rest",
+        "host": "localhost",
+        "port": "8013",
+        "username": "awx",
+        "password": "awx"
+      }
+    }
+  ],
+  "states": [
+    {
+      "name": "finish",
+      "type": "operation",
+      "actions": [
+        {
+          "name": "printAction",
+          "functionRef": {
+            "refName": "printMessage",
+            "arguments": {
+              "message": "$.name"
+            }
+          }
+        },
+        {
+          "name": "ansibleAction",
+          "functionRef": "triggerAnsible"
+        }
+      ],
+      "end": {
+        "terminate": "true"
+      }
+    }
+  ]
+}
