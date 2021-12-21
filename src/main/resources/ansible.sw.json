@@ -4,7 +4,7 @@
   "expressionLang": "jsonpath",
   "name": "Workflow Ansible example",
   "description": "An example of how to integrate with Ansible",
-  "start": "finish",
+  "start": "trigger",
   "functions": [
     {
       "name": "printMessage",
@@ -20,25 +20,16 @@
         "type": "rest",
         "host": "localhost",
         "port": "8013",
-        "username": "awx",
+        "user": "awx",
         "password": "awx"
       }
     }
   ],
   "states": [
     {
-      "name": "finish",
+      "name": "trigger",
       "type": "operation",
       "actions": [
-        {
-          "name": "printAction",
-          "functionRef": {
-            "refName": "printMessage",
-            "arguments": {
-              "message": "$.name"
-            }
-          }
-        },
         {
           "name": "ansibleAction",
           "functionRef": "triggerAnsible"

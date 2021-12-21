@@ -21,6 +21,9 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.emptyOrNullString;
 
 @QuarkusTest
 class SWRestTest {
@@ -30,10 +33,13 @@ class SWRestTest {
         given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .body("{\"workflowdata\" : {\"name\" : \"John\"}}").when()
+                .body("{\"workflowdata\" : { } }").when()
                 .post("/ansible")
                 .then()
                 .log().all()
-                .statusCode(201);
+                .statusCode(201)
+                .body("id", not(emptyOrNullString()))
+                .body("workflowdata.type", is("job"))
+                .body("workflowdata.id", not(emptyOrNullString()));
     }
 }
