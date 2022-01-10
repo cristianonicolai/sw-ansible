@@ -14,15 +14,7 @@
     },
     {
       "name": "triggerAnsible",
-      "operation": "/api/v2/job_templates/7/launch/",
-      "metadata": {
-        "method": "POST",
-        "type": "rest",
-        "host": "localhost",
-        "port": "8013",
-        "user": "awx",
-        "password": "awx"
-      }
+      "operation": "ansible.swagger.json#jobTemplatesJobTemplatesLaunchCreate"
     }
   ],
   "states": [
@@ -32,7 +24,12 @@
       "actions": [
         {
           "name": "ansibleAction",
-          "functionRef": "triggerAnsible"
+          "functionRef": {
+            "refName": "triggerAnsible",
+            "arguments": {
+              "id": "7"
+            }
+          }
         }
       ],
       "end": {
