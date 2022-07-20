@@ -12,10 +12,10 @@
   <name>Kogito Example :: Serverless Workflow Ansible :: Quarkus</name>
   <description>Kogito Serverless Workflow Ansible Example - Quarkus</description>
   <properties>
-    <quarkus-plugin.version>2.6.1.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>2.7.3.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.6.1.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.7.3.Final</quarkus.platform.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -33,22 +33,22 @@
       <groupId>org.kie.kogito</groupId>
       <artifactId>kogito-quarkus-serverless-workflow</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-rest-workitem</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.kie.kogito</groupId>-->
+<!--      <artifactId>kogito-rest-workitem</artifactId>-->
+<!--    </dependency>-->
 <!--    <dependency>-->
 <!--      <groupId>org.kie.kogito</groupId>-->
 <!--      <artifactId>kogito-quarkus-test-utils</artifactId>-->
 <!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.kie.kogito</groupId>-->
-<!--      <artifactId>kogito-addons-quarkus-messaging</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>io.quarkus</groupId>-->
-<!--      <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.kie.kogito</groupId>
+      <artifactId>kogito-addons-quarkus-messaging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
@@ -56,6 +56,14 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jackson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-client-jackson</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

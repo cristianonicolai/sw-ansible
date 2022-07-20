@@ -4,7 +4,7 @@
   "expressionLang": "jsonpath",
   "name": "Workflow Ansible example",
   "description": "An example of how to integrate with Ansible",
-  "start": "trigger",
+  "start": "Trigger",
   "functions": [
     {
       "name": "printMessage",
@@ -15,19 +15,52 @@
     {
       "name": "triggerAnsible",
       "operation": "ansible.swagger.json#jobTemplatesJobTemplatesLaunchCreate"
+    },
+    {
+      "name": "triggerAnsibleManually",
+      "metadata": {
+        "interface": "org.kie.kogito.examples.AnsibleService",
+        "operation": "triggerJob",
+        "type": "service"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "AnsibleTowerEvent",
+      "source": "",
+      "type": "ansible-tower-job-completed"
     }
   ],
   "states": [
     {
-      "name": "trigger",
+      "name": "Trigger",
+      "type": "callback",
+      "action": {
+        "name": "ansibleAction",
+        "functionRef": {
+          "refName": "triggerAnsible",
+          "arguments": {
+            "id": "7",
+            "extra_vars": {
+              "kogito_id" : "$WORKFLOW.instanceId"
+            }
+          }
+        }
+      },
+      "eventRef": "AnsibleTowerEvent",
+      "transition": "VerifyPlaybookRun"
+    },
+    {
+      "name": "VerifyPlaybookRun",
       "type": "operation",
       "actions": [
         {
-          "name": "ansibleAction",
+          "name": "printAction",
           "functionRef": {
-            "refName": "triggerAnsible",
+            "refName": "printMessage",
             "arguments": {
-              "id": "7"
+              "message": "$[*]"
             }
           }
         }
