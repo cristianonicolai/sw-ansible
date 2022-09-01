@@ -18,6 +18,7 @@ package org.kie.kogito.examples;
 
 import javax.inject.Singleton;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.cloudevents.jackson.JsonFormat;
@@ -27,7 +28,8 @@ import io.quarkus.jackson.ObjectMapperCustomizer;
 public class AnsibleObjectMapperCustomizer implements ObjectMapperCustomizer {
 
     @Override
-    public void customize(ObjectMapper objectMapper) {
-        objectMapper.registerModule(JsonFormat.getCloudEventJacksonModule());
+    public void customize(ObjectMapper mapper) {
+        mapper.registerModule(JsonFormat.getCloudEventJacksonModule());
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 }

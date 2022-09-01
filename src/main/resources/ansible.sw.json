@@ -15,14 +15,6 @@
     {
       "name": "triggerAnsible",
       "operation": "ansible.swagger.json#jobTemplatesJobTemplatesLaunchCreate"
-    },
-    {
-      "name": "triggerAnsibleManually",
-      "metadata": {
-        "interface": "org.kie.kogito.examples.AnsibleService",
-        "operation": "triggerJob",
-        "type": "service"
-      }
     }
   ],
   "events": [

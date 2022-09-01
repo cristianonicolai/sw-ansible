@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cloudevents.CloudEvent;
 import io.cloudevents.core.builder.CloudEventBuilder;
 
-@Path("/webhook")
+@Path("/tower")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -54,7 +54,7 @@ public class AnsibleWebhookResource {
     public void add(AnsiblePayload payload) {
         System.out.println("received payload = \n" + payload);
         try {
-            if (payload.getExtraVars() != null) {
+            if (payload != null && payload.getExtraVars() != null) {
                 System.out.println("payload.getExtraVars() = " + payload.getExtraVars());
                 JsonNode extraVars = mapper.readTree(payload.getExtraVars());
                 System.out.println("extraVars isObject = " + extraVars.isObject());

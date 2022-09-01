@@ -17,20 +17,29 @@ package org.kie.kogito.examples;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 import io.restassured.http.ContentType;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.emptyOrNullString;
 
 @QuarkusIntegrationTest
+@QuarkusTestResource(WiremockAWX.class)
 class SWRestIT {
+
+    WireMockServer awxServer;
 
     @Test
     void testRest() {
-        given()
+        String pId = given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body("{\"workflowdata\" : { } }").when()
@@ -39,7 +48,14 @@ class SWRestIT {
                 .log().all()
                 .statusCode(201)
                 .body("id", not(emptyOrNullString()))
-                .body("workflowdata.type", is("job"))
-                .body("workflowdata.id", not(emptyOrNullString()));
+                .extract()
+                .path("id");
+
+        //                .body("workflowdata.type", is("job"))
+        //                .body("workflowdata.id", not(emptyOrNullString()));
+
+        awxServer.verify(postRequestedFor(urlEqualTo("/api/v2/job_templates/7/launch/"))
+                .withHeader("Content-Type", equalTo("application/json"))
+                .withRequestBody(matchingJsonPath("$.extra_vars.kogito_id", equalTo(pId))));
     }
 }
