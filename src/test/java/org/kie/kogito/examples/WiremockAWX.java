@@ -33,7 +33,7 @@ public class WiremockAWX implements QuarkusTestResourceLifecycleManager {
 
     private WireMockServer wireMockServer;
 
-    public static final String URL_KEY = "quarkus.rest-client.ansible_swagger_json.url";
+    public static final String URL_KEY = "quarkus.rest-client.ansible_triggerAnsible.url";
 
     @Override
     public Map<String, String> start() {
