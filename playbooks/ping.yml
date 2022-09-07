@@ -1,4 +1,7 @@
 - name: Check connection with Openshift
+  hosts: localhost
+  gather_facts: false
+  connection: local
   tasks:
     - name: Check k8s namespace
       redhat.openshift.k8s:
