@@ -41,7 +41,10 @@ public class WiremockAWX implements QuarkusTestResourceLifecycleManager {
         wireMockServer.start();
         configureFor(wireMockServer.port());
         wireMockServer.stubFor(post(urlPathEqualTo("/api/v2/job_templates/7/launch/"))
-                .willReturn(aResponse().withStatus(201)));
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withStatus(201)
+                        .withBody("{ \"job\" : 1, \"type\" : \"job\" }")));
         return singletonMap(URL_KEY, wireMockServer.baseUrl());
     }
 

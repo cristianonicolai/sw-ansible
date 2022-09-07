@@ -7,13 +7,14 @@
   "start": "Trigger",
   "functions": [
     {
-      "name": "printMessage",
-      "type":"custom",
-      "operation":"sysout"
+      "name": "triggerAnsible",
+      "operation": "specs/RedHatRegistry__tower__latest.yaml#Job Templates_job_templates_launch_create",
+      "type": "rest"
     },
     {
-      "name": "triggerAnsible",
-      "operation": "ansible.swagger.json#jobTemplatesJobTemplatesLaunchCreate"
+      "name": "printMessage",
+      "type": "custom",
+      "operation": "sysout"
     }
   ],
   "events": [
@@ -34,7 +35,7 @@
           "arguments": {
             "id": "7",
             "extra_vars": {
-              "kogito_id" : "$WORKFLOW.instanceId"
+              "kogito_id": "$WORKFLOW.instanceId"
             }
           }
         }

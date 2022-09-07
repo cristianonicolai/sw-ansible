@@ -1,0 +1,1610 @@
+consumes:
+  - application/json
+host: null
+info:
+  description: ""
+  title: Ansible Automation Platform controller API
+  version: ""
+paths:
+  /api/:
+    get:
+      description: ""
+      operationId: Versioning_list
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: List supported API versions
+      tags:
+        - Versioning
+  /api/o/:
+    get:
+      operationId: Authentication_o_list
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: " Token Handling using OAuth2"
+      tags:
+        - Authentication
+  /api/v2/:
+    get:
+      description: ""
+      operationId: Versioning_read
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: List top level resources
+      tags:
+        - Versioning
+  /api/v2/auth/:
+    get:
+      description: ""
+      operationId: System Configuration_auth_list
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: List enabled single-sign-on endpoints
+      tags:
+        - System Configuration
+  /api/v2/job_templates/:
+    get:
+      operationId: Job Templates_job_templates_list
+      parameters:
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Job Templates"
+      tags:
+        - Job Templates
+    post:
+      consumes:
+        - application/json
+      description: >-
+        
+        Make a POST request to this resource with the following job template
+
+        fields to create a new job template:
+
+
+
+
+
+
+
+
+
+
+        * `name`: Name of this job template. (string, required)
+
+        * `description`: Optional description of this job template. (string, default=`""`)
+
+        * `job_type`:  (choice)
+            - `run`: Run (default)
+            - `check`: Check
+        * `inventory`:  (id, default=``)
+
+        * `project`:  (id, default=``)
+
+        * `playbook`:  (string, default=`""`)
+
+        * `scm_branch`: Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true. (string, default=`""`)
+
+        * `forks`:  (integer, default=`0`)
+
+        * `limit`:  (string, default=`""`)
+
+        * `verbosity`:  (choice)
+            - `0`: 0 (Normal) (default)
+            - `1`: 1 (Verbose)
+            - `2`: 2 (More Verbose)
+            - `3`: 3 (Debug)
+            - `4`: 4 (Connection Debug)
+            - `5`: 5 (WinRM Debug)
+        * `extra_vars`:  (json, default=``)
+
+        * `job_tags`:  (string, default=`""`)
+
+        * `force_handlers`:  (boolean, default=`False`)
+
+        * `skip_tags`:  (string, default=`""`)
+
+        * `start_at_task`:  (string, default=`""`)
+
+        * `timeout`: The amount of time (in seconds) to run before the task is canceled. (integer, default=`0`)
+
+        * `use_fact_cache`: If enabled, the service will act as an Ansible Fact Cache Plugin; persisting facts at the end of a playbook run to the database and caching facts for use by Ansible. (boolean, default=`False`)
+
+
+
+
+
+
+        * `execution_environment`: The container image to be used for execution. (id, default=``)
+
+        * `host_config_key`:  (string, default=`""`)
+
+        * `ask_scm_branch_on_launch`:  (boolean, default=`False`)
+
+        * `ask_diff_mode_on_launch`:  (boolean, default=`False`)
+
+        * `ask_variables_on_launch`:  (boolean, default=`False`)
+
+        * `ask_limit_on_launch`:  (boolean, default=`False`)
+
+        * `ask_tags_on_launch`:  (boolean, default=`False`)
+
+        * `ask_skip_tags_on_launch`:  (boolean, default=`False`)
+
+        * `ask_job_type_on_launch`:  (boolean, default=`False`)
+
+        * `ask_verbosity_on_launch`:  (boolean, default=`False`)
+
+        * `ask_inventory_on_launch`:  (boolean, default=`False`)
+
+        * `ask_credential_on_launch`:  (boolean, default=`False`)
+
+        * `survey_enabled`:  (boolean, default=`False`)
+
+        * `become_enabled`:  (boolean, default=`False`)
+
+        * `diff_mode`: If enabled, textual changes made to any templated files on the host are shown in the standard output (boolean, default=`False`)
+
+        * `allow_simultaneous`:  (boolean, default=`False`)
+
+
+        * `job_slice_count`: The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is greater than 1. (integer, default=`1`)
+
+        * `webhook_service`: Service that webhook requests will be accepted from (choice)
+            - `""`: ---------
+            - `github`: GitHub
+            - `gitlab`: GitLab
+        * `webhook_credential`: Personal Access Token for posting back the status to the service API (id, default=``)
+      operationId: Job Templates_job_templates_create
+      parameters:
+        - in: body
+          name: data
+          schema:
+            properties:
+              allow_simultaneous:
+                description: ""
+                type: boolean
+              ask_credential_on_launch:
+                description: ""
+                type: boolean
+              ask_diff_mode_on_launch:
+                description: ""
+                type: boolean
+              ask_inventory_on_launch:
+                description: ""
+                type: boolean
+              ask_job_type_on_launch:
+                description: ""
+                type: boolean
+              ask_limit_on_launch:
+                description: ""
+                type: boolean
+              ask_scm_branch_on_launch:
+                description: ""
+                type: boolean
+              ask_skip_tags_on_launch:
+                description: ""
+                type: boolean
+              ask_tags_on_launch:
+                description: ""
+                type: boolean
+              ask_variables_on_launch:
+                description: ""
+                type: boolean
+              ask_verbosity_on_launch:
+                description: ""
+                type: boolean
+              become_enabled:
+                description: ""
+                type: boolean
+              description:
+                description: ""
+                type: string
+              diff_mode:
+                description: If enabled, textual changes made to any templated files on the host
+                  are shown in the standard output
+                type: boolean
+              execution_environment:
+                description: The container image to be used for execution.
+                type: integer
+              extra_vars:
+                description: ""
+                type: string
+              force_handlers:
+                description: ""
+                type: boolean
+              forks:
+                description: ""
+                type: integer
+              host_config_key:
+                description: ""
+                type: string
+              inventory:
+                description: ""
+                type: integer
+              job_slice_count:
+                description: The number of jobs to slice into at runtime. Will cause the Job
+                  Template to launch a workflow if value is greater than 1.
+                type: integer
+              job_tags:
+                description: ""
+                type: string
+              job_type:
+                description: ""
+                type: string
+              limit:
+                description: ""
+                type: string
+              name:
+                description: ""
+                type: string
+              playbook:
+                description: ""
+                type: string
+              project:
+                description: ""
+                type: string
+              scm_branch:
+                description: Branch to use in job run. Project default used if blank. Only
+                  allowed if project allow_override field is set to true.
+                type: string
+              skip_tags:
+                description: ""
+                type: string
+              start_at_task:
+                description: ""
+                type: string
+              survey_enabled:
+                description: ""
+                type: boolean
+              timeout:
+                description: The amount of time (in seconds) to run before the task is canceled.
+                type: integer
+              use_fact_cache:
+                description: If enabled, the service will act as an Ansible Fact Cache Plugin;
+                  persisting facts at the end of a playbook run to the database
+                  and caching facts for use by Ansible.
+                type: boolean
+              verbosity:
+                description: ""
+                type: string
+              webhook_credential:
+                description: Personal Access Token for posting back the status to the service
+                  API
+                type: integer
+              webhook_service:
+                description: Service that webhook requests will be accepted from
+                type: string
+            required:
+              - name
+            type: object
+      responses:
+        "201":
+          description: ""
+      summary: " Create a Job Template"
+      tags:
+        - Job Templates
+  "/api/v2/job_templates/{id}/":
+    delete:
+      operationId: Job Templates_job_templates_delete
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "204":
+          description: ""
+      summary: " Delete a Job Template"
+      tags:
+        - Job Templates
+    get:
+      operationId: Job Templates_job_templates_read
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          examples:
+            application/json:
+              allow_simultaneous: false
+              ask_credential_on_launch: false
+              ask_diff_mode_on_launch: false
+              ask_inventory_on_launch: false
+              ask_job_type_on_launch: false
+              ask_limit_on_launch: false
+              ask_scm_branch_on_launch: false
+              ask_skip_tags_on_launch: false
+              ask_tags_on_launch: false
+              ask_variables_on_launch: false
+              ask_verbosity_on_launch: false
+              become_enabled: false
+              created: 2018-02-01T08:00:00.000000Z
+              custom_virtualenv: null
+              description: ""
+              diff_mode: false
+              execution_environment: null
+              extra_vars: ""
+              force_handlers: false
+              forks: 0
+              host_config_key: ""
+              id: 1
+              inventory: 1
+              job_slice_count: 3
+              job_tags: ""
+              job_type: run
+              last_job_failed: false
+              last_job_run: null
+              limit: ""
+              modified: 2018-02-01T08:00:00.000000Z
+              name: slice-jt-from-factory
+              next_job_run: null
+              organization: null
+              playbook: ""
+              project: null
+              related:
+                access_list: /api/v2/job_templates/1/access_list/
+                activity_stream: /api/v2/job_templates/1/activity_stream/
+                copy: /api/v2/job_templates/1/copy/
+                credentials: /api/v2/job_templates/1/credentials/
+                instance_groups: /api/v2/job_templates/1/instance_groups/
+                inventory: /api/v2/inventories/1/
+                jobs: /api/v2/job_templates/1/jobs/
+                labels: /api/v2/job_templates/1/labels/
+                launch: /api/v2/job_templates/1/launch/
+                notification_templates_error: /api/v2/job_templates/1/notification_templates_error/
+                notification_templates_started: /api/v2/job_templates/1/notification_templates_started/
+                notification_templates_success: /api/v2/job_templates/1/notification_templates_success/
+                object_roles: /api/v2/job_templates/1/object_roles/
+                schedules: /api/v2/job_templates/1/schedules/
+                slice_workflow_jobs: /api/v2/job_templates/1/slice_workflow_jobs/
+                survey_spec: /api/v2/job_templates/1/survey_spec/
+                webhook_key: /api/v2/job_templates/1/webhook_key/
+                webhook_receiver: ""
+              scm_branch: ""
+              skip_tags: ""
+              start_at_task: ""
+              status: never updated
+              summary_fields:
+                credentials: []
+                inventory:
+                  description: ""
+                  has_active_failures: false
+                  has_inventory_sources: false
+                  hosts_with_active_failures: 0
+                  id: 1
+                  inventory_sources_with_failures: 0
+                  kind: ""
+                  name: test-inv
+                  organization_id: 1
+                  total_groups: 0
+                  total_hosts: 0
+                  total_inventory_sources: 0
+                labels:
+                  count: 0
+                  results: []
+                object_roles:
+                  admin_role:
+                    description: Can manage all aspects of the job template
+                    id: 21
+                    name: Admin
+                  execute_role:
+                    description: May run the job template
+                    id: 22
+                    name: Execute
+                  read_role:
+                    description: May view settings for the job template
+                    id: 23
+                    name: Read
+                recent_jobs:
+                  - canceled_on: null
+                    finished: null
+                    id: 1
+                    status: new
+                    type: workflow_job
+                user_capabilities:
+                  copy: false
+                  delete: true
+                  edit: true
+                  schedule: false
+                  start: false
+              survey_enabled: false
+              timeout: 0
+              type: job_template
+              url: /api/v2/job_templates/1/
+              use_fact_cache: false
+              verbosity: 0
+              webhook_credential: null
+              webhook_service: ""
+      summary: " Retrieve a Job Template"
+      tags:
+        - Job Templates
+    patch:
+      consumes:
+        - application/json
+      operationId: Job Templates_job_templates_partial_update
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+        - in: body
+          name: data
+          schema:
+            example:
+              webhook_credential: 1
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          examples:
+            application/json:
+              allow_simultaneous: false
+              ask_credential_on_launch: false
+              ask_diff_mode_on_launch: false
+              ask_inventory_on_launch: false
+              ask_job_type_on_launch: false
+              ask_limit_on_launch: false
+              ask_scm_branch_on_launch: false
+              ask_skip_tags_on_launch: false
+              ask_tags_on_launch: false
+              ask_variables_on_launch: false
+              ask_verbosity_on_launch: false
+              become_enabled: false
+              created: 2018-02-01T08:00:00.000000Z
+              custom_virtualenv: null
+              description: ""
+              diff_mode: false
+              execution_environment: null
+              extra_vars: ""
+              force_handlers: false
+              forks: 0
+              host_config_key: ""
+              id: 2
+              inventory: 1
+              job_slice_count: 1
+              job_tags: ""
+              job_type: run
+              last_job_failed: false
+              last_job_run: null
+              limit: ""
+              modified: 2018-02-01T08:00:00.000000Z
+              name: jt
+              next_job_run: null
+              organization: 1
+              playbook: helloworld.yml
+              project: 1
+              related:
+                access_list: /api/v2/job_templates/2/access_list/
+                activity_stream: /api/v2/job_templates/2/activity_stream/
+                copy: /api/v2/job_templates/2/copy/
+                credentials: /api/v2/job_templates/2/credentials/
+                instance_groups: /api/v2/job_templates/2/instance_groups/
+                inventory: /api/v2/inventories/1/
+                jobs: /api/v2/job_templates/2/jobs/
+                labels: /api/v2/job_templates/2/labels/
+                launch: /api/v2/job_templates/2/launch/
+                notification_templates_error: /api/v2/job_templates/2/notification_templates_error/
+                notification_templates_started: /api/v2/job_templates/2/notification_templates_started/
+                notification_templates_success: /api/v2/job_templates/2/notification_templates_success/
+                object_roles: /api/v2/job_templates/2/object_roles/
+                organization: /api/v2/organizations/1/
+                project: /api/v2/projects/1/
+                schedules: /api/v2/job_templates/2/schedules/
+                slice_workflow_jobs: /api/v2/job_templates/2/slice_workflow_jobs/
+                survey_spec: /api/v2/job_templates/2/survey_spec/
+                webhook_credential: /api/v2/credentials/1/
+                webhook_key: /api/v2/job_templates/2/webhook_key/
+                webhook_receiver: /api/v2/job_templates/2/gitlab/
+              scm_branch: ""
+              skip_tags: ""
+              start_at_task: ""
+              status: never updated
+              summary_fields:
+                credentials: []
+                inventory:
+                  description: ""
+                  has_active_failures: false
+                  has_inventory_sources: false
+                  hosts_with_active_failures: 0
+                  id: 1
+                  inventory_sources_with_failures: 0
+                  kind: ""
+                  name: test_inv
+                  organization_id: 1
+                  total_groups: 0
+                  total_hosts: 0
+                  total_inventory_sources: 0
+                labels:
+                  count: 0
+                  results: []
+                object_roles:
+                  admin_role:
+                    description: Can manage all aspects of the job template
+                    id: 25
+                    name: Admin
+                  execute_role:
+                    description: May run the job template
+                    id: 26
+                    name: Execute
+                  read_role:
+                    description: May view settings for the job template
+                    id: 27
+                    name: Read
+                organization:
+                  description: org
+                  id: 1
+                  name: org
+                project:
+                  allow_override: false
+                  description: test_proj-description
+                  id: 1
+                  name: test_proj
+                  scm_type: ""
+                  status: missing
+                recent_jobs: []
+                user_capabilities:
+                  copy: true
+                  delete: true
+                  edit: true
+                  schedule: true
+                  start: true
+                webhook_credential:
+                  cloud: false
+                  credential_type_id: 1
+                  description: ""
+                  id: 1
+                  kind: gitlab_token
+                  name: test-cred
+              survey_enabled: false
+              timeout: 0
+              type: job_template
+              url: /api/v2/job_templates/2/
+              use_fact_cache: false
+              verbosity: 0
+              webhook_credential: 1
+              webhook_service: gitlab
+        "400":
+          description: ""
+          examples:
+            application/json:
+              webhook_credential:
+                - Must match the selected webhook service.
+      summary: " Update a Job Template"
+      tags:
+        - Job Templates
+    put:
+      consumes:
+        - application/json
+      operationId: Job Templates_job_templates_update
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+        - in: body
+          name: data
+          schema:
+            properties:
+              allow_simultaneous:
+                description: ""
+                type: boolean
+              ask_credential_on_launch:
+                description: ""
+                type: boolean
+              ask_diff_mode_on_launch:
+                description: ""
+                type: boolean
+              ask_inventory_on_launch:
+                description: ""
+                type: boolean
+              ask_job_type_on_launch:
+                description: ""
+                type: boolean
+              ask_limit_on_launch:
+                description: ""
+                type: boolean
+              ask_scm_branch_on_launch:
+                description: ""
+                type: boolean
+              ask_skip_tags_on_launch:
+                description: ""
+                type: boolean
+              ask_tags_on_launch:
+                description: ""
+                type: boolean
+              ask_variables_on_launch:
+                description: ""
+                type: boolean
+              ask_verbosity_on_launch:
+                description: ""
+                type: boolean
+              become_enabled:
+                description: ""
+                type: boolean
+              description:
+                description: ""
+                type: string
+              diff_mode:
+                description: If enabled, textual changes made to any templated files on the host
+                  are shown in the standard output
+                type: boolean
+              execution_environment:
+                description: The container image to be used for execution.
+                type: integer
+              extra_vars:
+                description: ""
+                type: string
+              force_handlers:
+                description: ""
+                type: boolean
+              forks:
+                description: ""
+                type: integer
+              host_config_key:
+                description: ""
+                type: string
+              inventory:
+                description: ""
+                type: integer
+              job_slice_count:
+                description: The number of jobs to slice into at runtime. Will cause the Job
+                  Template to launch a workflow if value is greater than 1.
+                type: integer
+              job_tags:
+                description: ""
+                type: string
+              job_type:
+                description: ""
+                type: string
+              limit:
+                description: ""
+                type: string
+              name:
+                description: ""
+                type: string
+              playbook:
+                description: ""
+                type: string
+              project:
+                description: ""
+                type: string
+              scm_branch:
+                description: Branch to use in job run. Project default used if blank. Only
+                  allowed if project allow_override field is set to true.
+                type: string
+              skip_tags:
+                description: ""
+                type: string
+              start_at_task:
+                description: ""
+                type: string
+              survey_enabled:
+                description: ""
+                type: boolean
+              timeout:
+                description: The amount of time (in seconds) to run before the task is canceled.
+                type: integer
+              use_fact_cache:
+                description: If enabled, the service will act as an Ansible Fact Cache Plugin;
+                  persisting facts at the end of a playbook run to the database
+                  and caching facts for use by Ansible.
+                type: boolean
+              verbosity:
+                description: ""
+                type: string
+              webhook_credential:
+                description: Personal Access Token for posting back the status to the service
+                  API
+                type: integer
+              webhook_service:
+                description: Service that webhook requests will be accepted from
+                type: string
+            required:
+              - name
+            type: object
+      responses:
+        "200":
+          description: ""
+      summary: " Update a Job Template"
+      tags:
+        - Job Templates
+  "/api/v2/job_templates/{id}/activity_stream/":
+    get:
+      operationId: Job Templates_job_templates_activity_stream_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Activity Streams for a Job Template"
+      tags:
+        - Job Templates
+  "/api/v2/job_templates/{id}/jobs/":
+    get:
+      operationId: Job Templates_job_templates_jobs_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Jobs for a Job Template"
+      tags:
+        - Job Templates
+  "/api/v2/job_templates/{id}/launch/":
+    get:
+      description: >-
+        
+        Make a GET request to this resource to determine if the job_template can be
+
+        launched and whether any passwords are required to launch the job_template.
+
+        The response will include the following fields:
+
+
+        * `ask_variables_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for variables upon launch (boolean, read-only)
+        * `ask_tags_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for tags upon launch (boolean, read-only)
+        * `ask_skip_tags_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for skip_tags upon launch (boolean, read-only)
+        * `ask_job_type_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for job_type upon launch (boolean, read-only)
+        * `ask_limit_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for limit upon launch (boolean, read-only)
+        * `ask_inventory_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for inventory upon launch (boolean, read-only)
+        * `ask_credential_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for credential upon launch (boolean, read-only)
+        * `can_start_without_user_input`: Flag indicating if the job_template can be
+          launched without user-input (boolean, read-only)
+        * `passwords_needed_to_start`: Password names required to launch the
+          job_template (array, read-only)
+        * `variables_needed_to_start`: Required variable names required to launch the
+          job_template (array, read-only)
+        * `survey_enabled`: Flag indicating whether the job_template has an enabled
+          survey (boolean, read-only)
+        * `inventory_needed_to_start`: Flag indicating the presence of an inventory
+          associated with the job template.  If not then one should be supplied when
+          launching the job (boolean, read-only)
+
+        Make a POST request to this resource to launch the job_template. If any
+
+        passwords, inventory, or extra variables (extra_vars) are required, they must
+
+        be passed via POST data, with extra_vars given as a YAML or JSON string and
+
+        escaped parentheses. If the `inventory_needed_to_start` is `True` then the
+
+        `inventory` is required.
+
+
+        If successful, the response status code will be 201.  If any required passwords
+
+        are not provided, a 400 status code will be returned.  If the job cannot be
+
+        launched, a 405 status code will be returned. If the provided credential or
+
+        inventory are not allowed to be used by the user, then a 403 status code will
+
+        be returned.
+      operationId: Job Templates_job_templates_launch_read
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          examples:
+            application/json:
+              ask_credential_on_launch: true
+              ask_diff_mode_on_launch: false
+              ask_inventory_on_launch: false
+              ask_job_type_on_launch: false
+              ask_limit_on_launch: false
+              ask_scm_branch_on_launch: false
+              ask_skip_tags_on_launch: false
+              ask_tags_on_launch: false
+              ask_variables_on_launch: false
+              ask_verbosity_on_launch: false
+              can_start_without_user_input: false
+              credential_needed_to_start: false
+              defaults:
+                credentials:
+                  - credential_type: 1
+                    id: 1
+                    name: machine-cred
+                    passwords_needed:
+                      - ssh_password
+                diff_mode: false
+                extra_vars: ""
+                inventory:
+                  id: 1
+                  name: test-inv
+                job_tags: ""
+                job_type: run
+                limit: ""
+                scm_branch: ""
+                skip_tags: ""
+                verbosity: 0
+              inventory_needed_to_start: false
+              job_template_data:
+                description: ""
+                id: 1
+                name: test-job_template
+              passwords_needed_to_start:
+                - ssh_password
+              survey_enabled: false
+              variables_needed_to_start: []
+      summary: Launch a Job Template
+      tags:
+        - Job Templates
+    post:
+      consumes:
+        - application/json
+      description: >-
+        
+        Make a GET request to this resource to determine if the job_template can be
+
+        launched and whether any passwords are required to launch the job_template.
+
+        The response will include the following fields:
+
+
+        * `ask_variables_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for variables upon launch (boolean, read-only)
+        * `ask_tags_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for tags upon launch (boolean, read-only)
+        * `ask_skip_tags_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for skip_tags upon launch (boolean, read-only)
+        * `ask_job_type_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for job_type upon launch (boolean, read-only)
+        * `ask_limit_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for limit upon launch (boolean, read-only)
+        * `ask_inventory_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for inventory upon launch (boolean, read-only)
+        * `ask_credential_on_launch`: Flag indicating whether the job_template is
+          configured to prompt for credential upon launch (boolean, read-only)
+        * `can_start_without_user_input`: Flag indicating if the job_template can be
+          launched without user-input (boolean, read-only)
+        * `passwords_needed_to_start`: Password names required to launch the
+          job_template (array, read-only)
+        * `variables_needed_to_start`: Required variable names required to launch the
+          job_template (array, read-only)
+        * `survey_enabled`: Flag indicating whether the job_template has an enabled
+          survey (boolean, read-only)
+        * `inventory_needed_to_start`: Flag indicating the presence of an inventory
+          associated with the job template.  If not then one should be supplied when
+          launching the job (boolean, read-only)
+
+        Make a POST request to this resource to launch the job_template. If any
+
+        passwords, inventory, or extra variables (extra_vars) are required, they must
+
+        be passed via POST data, with extra_vars given as a YAML or JSON string and
+
+        escaped parentheses. If the `inventory_needed_to_start` is `True` then the
+
+        `inventory` is required.
+
+
+        If successful, the response status code will be 201.  If any required passwords
+
+        are not provided, a 400 status code will be returned.  If the job cannot be
+
+        launched, a 405 status code will be returned. If the provided credential or
+
+        inventory are not allowed to be used by the user, then a 403 status code will
+
+        be returned.
+      operationId: Job Templates_job_templates_launch_create
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: data
+          schema:
+            properties:
+              credential_passwords:
+                description: ""
+                type: string
+              credentials:
+                description: ""
+                items:
+                  type: string
+                type: array
+              diff_mode:
+                description: ""
+                type: boolean
+              extra_vars:
+                description: ""
+                type: object
+              inventory:
+                description: ""
+                type: integer
+              job_tags:
+                description: ""
+                type: string
+              job_type:
+                description: ""
+                type: string
+              limit:
+                description: ""
+                type: string
+              scm_branch:
+                description: ""
+                type: string
+              skip_tags:
+                description: ""
+                type: string
+              verbosity:
+                description: ""
+                type: string
+            type: object
+      responses:
+        "201":
+          description: ""
+          schema:
+            type: object
+            properties:
+              job:
+                type: number
+              id:
+                type: number
+              url:
+                type: string
+              name:
+                type: string
+              type:
+                type: string
+              job_type:
+                type: string
+              playbook:
+                type: string
+              status:
+                type: string
+              failed:
+                type: boolean
+      summary: Launch a Job Template
+      tags:
+        - Job Templates
+  "/api/v2/job_templates/{id}/survey_spec/":
+    delete:
+      operationId: Job Templates_job_templates_survey_spec_delete
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "204":
+          description: ""
+      summary: POST requests to this resource should include the full specification
+        for a Job Template's Survey
+      tags:
+        - Job Templates
+    get:
+      operationId: Job Templates_job_templates_survey_spec_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: POST requests to this resource should include the full specification
+        for a Job Template's Survey
+      tags:
+        - Job Templates
+    post:
+      operationId: Job Templates_job_templates_survey_spec_create
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: data
+          schema:
+            example:
+              description: A survey that asks about n.
+              name: n survey
+              spec:
+                - choices: ""
+                  default: 0
+                  index: 0
+                  max: 100
+                  min: -100
+                  question_description: A question about new_question.
+                  question_name: Enter a value for new_question.
+                  required: true
+                  type: integer
+                  variable: new_question
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: ""
+        "403":
+          description: ""
+          examples:
+            application/json:
+              detail: You do not have permission to perform this action.
+      summary: POST requests to this resource should include the full specification
+        for a Job Template's Survey
+      tags:
+        - Job Templates
+  /api/v2/jobs/:
+    get:
+      operationId: Jobs_jobs_list
+      parameters:
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Jobs"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/":
+    delete:
+      operationId: Jobs_jobs_delete
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "204":
+          description: ""
+      summary: " Delete a Job"
+      tags:
+        - Jobs
+    get:
+      operationId: Jobs_jobs_read_0
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          examples:
+            application/json:
+              allow_simultaneous: false
+              artifacts: {}
+              canceled_on: null
+              controller_node: ""
+              created: 2018-02-01T08:00:00.000000Z
+              custom_virtualenv: null
+              description: ""
+              diff_mode: false
+              elapsed: 0
+              event_processing_finished: false
+              execution_environment: null
+              execution_node: ""
+              extra_vars: '{"secret_key": "$encrypted$", "job_var": "foo2"}'
+              failed: false
+              finished: null
+              force_handlers: false
+              forks: 0
+              host_status_counts: null
+              id: 1
+              instance_group: null
+              inventory: 1
+              job_args: ""
+              job_cwd: ""
+              job_env: {}
+              job_explanation: ""
+              job_slice_count: 1
+              job_slice_number: 0
+              job_tags: ""
+              job_template: 2
+              job_type: run
+              launch_type: manual
+              launched_by:
+                id: 2
+                name: bob
+                type: user
+                url: /api/v2/users/2/
+              limit: ""
+              modified: 2018-02-01T08:00:00.000000Z
+              name: testjt
+              organization: 1
+              passwords_needed_to_start: []
+              playbook: ""
+              playbook_counts:
+                play_count: 0
+                task_count: 0
+              project: 1
+              related:
+                activity_stream: /api/v2/jobs/1/activity_stream/
+                cancel: /api/v2/jobs/1/cancel/
+                create_schedule: /api/v2/jobs/1/create_schedule/
+                created_by: /api/v2/users/2/
+                credentials: /api/v2/jobs/1/credentials/
+                inventory: /api/v2/inventories/1/
+                job_events: /api/v2/jobs/1/job_events/
+                job_host_summaries: /api/v2/jobs/1/job_host_summaries/
+                job_template: /api/v2/job_templates/2/
+                labels: /api/v2/jobs/1/labels/
+                modified_by: /api/v2/users/2/
+                notifications: /api/v2/jobs/1/notifications/
+                organization: /api/v2/organizations/1/
+                project: /api/v2/projects/1/
+                relaunch: /api/v2/jobs/1/relaunch/
+                stdout: /api/v2/jobs/1/stdout/
+                unified_job_template: /api/v2/job_templates/2/
+              result_traceback: ""
+              scm_branch: ""
+              scm_revision: ""
+              skip_tags: ""
+              start_at_task: ""
+              started: null
+              status: new
+              summary_fields:
+                created_by:
+                  first_name: ""
+                  id: 2
+                  last_name: ""
+                  username: bob
+                credentials: []
+                inventory:
+                  description: ""
+                  has_active_failures: false
+                  has_inventory_sources: false
+                  hosts_with_active_failures: 0
+                  id: 1
+                  inventory_sources_with_failures: 0
+                  kind: ""
+                  name: test-inv
+                  organization_id: 1
+                  total_groups: 0
+                  total_hosts: 0
+                  total_inventory_sources: 0
+                job_template:
+                  description: ""
+                  id: 2
+                  name: testjt
+                labels:
+                  count: 0
+                  results: []
+                modified_by:
+                  first_name: ""
+                  id: 2
+                  last_name: ""
+                  username: bob
+                organization:
+                  description: test-org-desc
+                  id: 1
+                  name: test-org
+                project:
+                  allow_override: false
+                  description: test-proj-desc
+                  id: 1
+                  name: test-proj
+                  scm_type: git
+                  status: never updated
+                unified_job_template:
+                  description: ""
+                  id: 2
+                  name: testjt
+                  unified_job_type: job
+                user_capabilities:
+                  delete: false
+                  start: true
+              timeout: 0
+              type: job
+              unified_job_template: 2
+              url: /api/v2/jobs/1/
+              use_fact_cache: false
+              verbosity: 0
+              webhook_credential: null
+              webhook_guid: ""
+              webhook_service: ""
+              work_unit_id: null
+      summary: " Retrieve a Job Host Summary"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/activity_stream/":
+    get:
+      operationId: Jobs_jobs_activity_stream_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Activity Streams for a Job"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/cancel/":
+    get:
+      operationId: Jobs_jobs_cancel_read
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " Determine if a Job can be canceled"
+      tags:
+        - Jobs
+    post:
+      operationId: Jobs_jobs_cancel_create
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        "201":
+          description: ""
+      summary: " Cancel a Job"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/job_events/":
+    get:
+      operationId: Jobs_jobs_job_events_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Job Events for a Job"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/job_events/children_summary/":
+    get:
+      operationId: Jobs_jobs_job_events_children_summary_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " View a summary of children events"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/labels/":
+    get:
+      operationId: Jobs_jobs_labels_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Labels for a Job"
+      tags:
+        - Jobs
+  "/api/v2/jobs/{id}/notifications/":
+    get:
+      operationId: Jobs_jobs_notifications_list
+      parameters:
+        - description: ""
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " List Notifications for a Job"
+      tags:
+        - Jobs
+  /api/v2/me/:
+    get:
+      description: >-
+        
+        Make a GET request to retrieve user information about the current user.
+
+
+        One result should be returned containing the following fields:
+
+
+        * `id`: Database ID for this user. (integer)
+
+        * `type`: Data type for this user. (choice)
+
+        * `url`: URL for this user. (string)
+
+        * `related`: Data structure with URLs of related resources. (object)
+
+        * `summary_fields`: Data structure with name/description for related resources.  The output for some objects may be limited for performance reasons. (object)
+
+        * `created`: Timestamp when this user was created. (datetime)
+
+        * `modified`: Timestamp when this user was last modified. (datetime)
+
+        * `username`: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. (string)
+
+        * `first_name`:  (string)
+
+        * `last_name`:  (string)
+
+        * `email`:  (string)
+
+        * `is_superuser`: Designates that this user has all permissions without explicitly assigning them. (boolean)
+
+        * `is_system_auditor`:  (boolean)
+
+
+        * `ldap_dn`:  (string)
+
+        * `last_login`:  (datetime)
+
+        * `external_account`: Set if the account is managed by an external service (field)
+
+
+
+
+        Use the primary URL for the user (/api/v2/users/N/) to modify the user.
+      operationId: Users_me_list
+      parameters:
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: " Retrieve Information about the current User"
+      tags:
+        - Users
+security:
+  - basic: []
+schemes:
+  - https
+securityDefinitions:
+  basic:
+    type: basic
+swagger: "2.0"

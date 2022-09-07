@@ -28,6 +28,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.emptyOrNullString;
 
@@ -48,11 +49,10 @@ class SWRestIT {
                 .log().all()
                 .statusCode(201)
                 .body("id", not(emptyOrNullString()))
+                .body("workflowdata.job", not(emptyOrNullString()))
+                .body("workflowdata.type", is("job"))
                 .extract()
                 .path("id");
-
-        //                .body("workflowdata.type", is("job"))
-        //                .body("workflowdata.id", not(emptyOrNullString()));
 
         awxServer.verify(postRequestedFor(urlEqualTo("/api/v2/job_templates/7/launch/"))
                 .withHeader("Content-Type", equalTo("application/json"))
