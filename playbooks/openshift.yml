@@ -1,0 +1,9 @@
+- name: Check connection with Openshift
+  hosts: openshift-sandbox
+  tasks:
+  - name: Check k8s namespace
+    kubernetes.core.k8s:
+      name: cnicolai-dev
+      api_version: v1
+      kind: Namespace
+      state: present
