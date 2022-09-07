@@ -1,10 +1,11 @@
 - name: Check connection with Openshift
-  hosts: localhost
-  gather_facts: false
-  connection: local
+  plugin: redhat.openshift.openshift
+  connections:
+    - namespaces:
+        - cnicolai-dev
   tasks:
   - name: Check k8s namespace
-    kubernetes.core.k8s:
+    redhat.openshift.k8s:
       name: cnicolai-dev
       api_version: v1
       kind: Namespace
