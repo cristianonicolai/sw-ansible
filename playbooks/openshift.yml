@@ -1,5 +1,7 @@
 - name: Check connection with Openshift
-  hosts: openshift-sandbox
+  hosts: localhost
+  gather_facts: false
+  connection: local
   tasks:
   - name: Check k8s namespace
     kubernetes.core.k8s:
