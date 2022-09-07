@@ -1,5 +1,6 @@
 ---
 collections:
-  - name: redhat.openshift
-    version: 2.2.0
-  - name: cloud.common
+#  - name: redhat.openshift
+#    version: 2.2.0
+#  - name: cloud.common
+  - name: community.docker

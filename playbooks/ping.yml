@@ -1,11 +1,9 @@
-- name: Check connection with Openshift
+- name: Check connection with Docker
   hosts: localhost
   gather_facts: false
-  connection: local
   tasks:
-    - name: Check k8s namespace
-      redhat.openshift.k8s:
-        name: cnicolai-dev
-        api_version: v1
-        kind: Namespace
+    - name: Container present
+      community.docker.docker_container:
+        name: tools_awx_1
         state: present
+        image: ghcr.io/ansible/awx_devel:devel
