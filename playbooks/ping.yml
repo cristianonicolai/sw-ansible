@@ -1,6 +1,5 @@
 - name: Check connection with Docker
-  hosts: localhost
-  gather_facts: false
+  hosts: ansible-demo
   tasks:
     - name: Container present
       community.docker.docker_container:
