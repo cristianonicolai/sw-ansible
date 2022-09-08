@@ -4,11 +4,22 @@
   "expressionLang": "jsonpath",
   "name": "Workflow Ansible example",
   "description": "An example of how to integrate with Ansible",
-  "start": "Trigger",
+  "start": "Restart Travels Service",
+  "errors": [
+    {
+      "name": "healthcheckerror",
+      "code": "503"
+    }
+  ],
   "functions": [
     {
       "name": "triggerAnsible",
       "operation": "specs/RedHatRegistry__tower__latest.yaml#Job Templates_job_templates_launch_create",
+      "type": "rest"
+    },
+    {
+      "name": "travelsHealth",
+      "operation": "specs/travels.yaml#microprofile_health_root",
       "type": "rest"
     },
     {
@@ -26,14 +37,14 @@
   ],
   "states": [
     {
-      "name": "Trigger",
+      "name": "Restart Travels Service",
       "type": "callback",
       "action": {
-        "name": "ansibleAction",
+        "name": "restartTravelsService",
         "functionRef": {
           "refName": "triggerAnsible",
           "arguments": {
-            "id": "7",
+            "id": "13",
             "extra_vars": {
               "kogito_id": "$WORKFLOW.instanceId"
             }
@@ -41,10 +52,60 @@
         }
       },
       "eventRef": "AnsibleTowerEvent",
-      "transition": "VerifyPlaybookRun"
+      "transition": "Travels Health Check"
     },
     {
-      "name": "VerifyPlaybookRun",
+      "name": "Travels Health Check",
+      "type": "operation",
+      "actions": [
+        {
+          "name": "getTravelsHealth",
+          "functionRef": {
+            "refName": "travelsHealth"
+          }
+        }
+      ],
+      "onErrors": [
+        {
+          "errorRef": "healthcheckerror",
+          "transition": "Rollback Travels Release"
+        }
+      ],
+      "transition": "ClassifyHealth"
+    },
+    {
+      "name": "ClassifyHealth",
+      "type": "switch",
+      "dataConditions": [
+        {
+          "condition": "${ $.[?(@.status  == 'UP')] }",
+          "end": true
+        }
+      ],
+      "defaultCondition": {
+        "transition": "Rollback Travels Release"
+      }
+    },
+    {
+      "name": "Rollback Travels Release",
+      "type": "callback",
+      "action": {
+        "name": "rollbackTravelsService",
+        "functionRef": {
+          "refName": "triggerAnsible",
+          "arguments": {
+            "id": "11",
+            "extra_vars": {
+              "kogito_id": "$WORKFLOW.instanceId"
+            }
+          }
+        }
+      },
+      "eventRef": "AnsibleTowerEvent",
+      "transition": "VerifyPlaybookRun2"
+    },
+    {
+      "name": "VerifyPlaybookRun2",
       "type": "operation",
       "actions": [
         {

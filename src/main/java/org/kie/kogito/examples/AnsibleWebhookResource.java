@@ -72,7 +72,15 @@ public class AnsibleWebhookResource {
                         .build();
                 String json = mapper.writeValueAsString(ce);
                 System.out.println("json = " + json);
-                emitter.send(json);
+                if(payload.getFinished() != null) {
+                    Thread.sleep(10000);
+                }
+                try {
+                    emitter.send(json).toCompletableFuture().get();
+                } catch (Exception ex){
+                    Thread.sleep(5000);
+                    emitter.send(json).toCompletableFuture().get();
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

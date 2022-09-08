@@ -1,0 +1,694 @@
+---
+openapi: 3.0.3
+info:
+  title: travels API
+  version: 2.0.0-SNAPSHOT
+paths:
+  /:
+    post:
+      tags:
+      - Cloud Event Listener Resource
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/CloudEvent'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /q/health:
+    summary: MicroProfile Health provides a way for your application to distribute
+      information about its healthiness state to state whether or not it is able to
+      function properly
+    description: MicroProfile Health Endpoint
+    get:
+      tags:
+      - MicroProfile Health
+      summary: "An aggregated view of the Liveness, Readiness and Startup of this\
+        \ application"
+      description: Check the health of the application
+      operationId: microprofile_health_root
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+  /q/health/live:
+    summary: Liveness checks are utilized to tell whether the application should be
+      restarted
+    description: MicroProfile Health - Liveness Endpoint
+    get:
+      tags:
+      - MicroProfile Health
+      summary: The Liveness check of this application
+      description: Check the liveness of the application
+      operationId: microprofile_health_liveness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+  /q/health/ready:
+    summary: Readiness checks are used to tell whether the application is able to
+      process requests
+    description: MicroProfile Health - Readiness Endpoint
+    get:
+      tags:
+      - MicroProfile Health
+      summary: The Readiness check of this application
+      description: Check the readiness of the application
+      operationId: microprofile_health_readiness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+  /q/health/started:
+    summary: Startup checks are an used to tell when the application has started
+    description: MicroProfile Health - Startup Endpoint
+    get:
+      tags:
+      - MicroProfile Health
+      summary: The Startup check of this application
+      description: Check the startup of the application
+      operationId: microprofile_health_startup
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          format: uri
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/Date'
+        updatedBy:
+          type: string
+        name:
+          type: string
+    AttachmentInfo:
+      type: object
+      properties:
+        uri:
+          format: uri
+          type: string
+        name:
+          type: string
+    CloudEvent:
+      type: object
+      properties:
+        specVersion:
+          $ref: '#/components/schemas/SpecVersion'
+        id:
+          type: string
+        type:
+          type: string
+        source:
+          format: uri
+          type: string
+        dataContentType:
+          type: string
+        dataSchema:
+          format: uri
+          type: string
+        subject:
+          type: string
+        time:
+          $ref: '#/components/schemas/OffsetDateTime'
+        attributeNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        extensionNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        data:
+          $ref: '#/components/schemas/CloudEventData'
+    CloudEventData:
+      type: object
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/Date'
+        updatedBy:
+          type: string
+    Date:
+      format: date
+      type: string
+      example: 2022-03-10
+    EntityTag:
+      type: object
+      properties:
+        value:
+          type: string
+        weak:
+          type: boolean
+    Family:
+      enum:
+      - INFORMATIONAL
+      - SUCCESSFUL
+      - REDIRECTION
+      - CLIENT_ERROR
+      - SERVER_ERROR
+      - OTHER
+      type: string
+    Flight:
+      type: object
+      properties:
+        flightNumber:
+          type: string
+        seat:
+          type: string
+        gate:
+          type: string
+        departure:
+          $ref: '#/components/schemas/Date'
+        arrival:
+          $ref: '#/components/schemas/Date'
+    FlightBookingModel:
+      type: object
+      properties:
+        id:
+          type: string
+        flight:
+          $ref: '#/components/schemas/Flight'
+        trip:
+          $ref: '#/components/schemas/Trip'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    FlightBookingModelOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        flight:
+          $ref: '#/components/schemas/Flight'
+        trip:
+          $ref: '#/components/schemas/Trip'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    Hotel:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        phone:
+          type: string
+        bookingNumber:
+          type: string
+        room:
+          type: string
+    HotelBookingModel:
+      type: object
+      properties:
+        id:
+          type: string
+        trip:
+          $ref: '#/components/schemas/Trip'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    HotelBookingModelOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        trip:
+          $ref: '#/components/schemas/Trip'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    Link:
+      type: object
+      properties:
+        uri:
+          format: uri
+          type: string
+        uriBuilder:
+          $ref: '#/components/schemas/UriBuilder'
+        rel:
+          type: string
+        rels:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        type:
+          type: string
+        params:
+          type: object
+          additionalProperties:
+            type: string
+    Locale:
+      type: object
+      properties:
+        language:
+          type: string
+        script:
+          type: string
+        country:
+          type: string
+        variant:
+          type: string
+        extensionKeys:
+          uniqueItems: true
+          type: array
+          items:
+            format: byte
+            type: string
+        unicodeLocaleAttributes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        unicodeLocaleKeys:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        iSO3Language:
+          type: string
+        iSO3Country:
+          type: string
+        displayLanguage:
+          type: string
+        displayScript:
+          type: string
+        displayCountry:
+          type: string
+        displayVariant:
+          type: string
+        displayName:
+          type: string
+    MediaType:
+      type: object
+      properties:
+        type:
+          type: string
+        subtype:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        wildcardType:
+          type: boolean
+        wildcardSubtype:
+          type: boolean
+    MultivaluedMapStringObject:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: object
+    MultivaluedMapStringString:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    NewCookie:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        version:
+          format: int32
+          type: integer
+        path:
+          type: string
+        domain:
+          type: string
+        comment:
+          type: string
+        maxAge:
+          format: int32
+          type: integer
+        expiry:
+          $ref: '#/components/schemas/Date'
+        secure:
+          type: boolean
+        httpOnly:
+          type: boolean
+    OffsetDateTime:
+      format: date-time
+      type: string
+      example: 2022-03-10T12:15:50-04:00
+    Response:
+      type: object
+      properties:
+        status:
+          format: int32
+          type: integer
+        statusInfo:
+          $ref: '#/components/schemas/StatusType'
+        entity:
+          type: object
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        language:
+          $ref: '#/components/schemas/Locale'
+        length:
+          format: int32
+          type: integer
+        allowedMethods:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        cookies:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NewCookie'
+        entityTag:
+          $ref: '#/components/schemas/EntityTag'
+        date:
+          $ref: '#/components/schemas/Date'
+        lastModified:
+          $ref: '#/components/schemas/Date'
+        location:
+          format: uri
+          type: string
+        links:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        metadata:
+          $ref: '#/components/schemas/MultivaluedMapStringObject'
+        headers:
+          $ref: '#/components/schemas/MultivaluedMapStringObject'
+        stringHeaders:
+          $ref: '#/components/schemas/MultivaluedMapStringString'
+    SpecVersion:
+      enum:
+      - V03
+      - V1
+      type: string
+    StatusType:
+      type: object
+      properties:
+        statusCode:
+          format: int32
+          type: integer
+        family:
+          $ref: '#/components/schemas/Family'
+        reasonPhrase:
+          type: string
+    TaskModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        state:
+          format: int32
+          type: integer
+        phase:
+          type: string
+        phaseStatus:
+          type: string
+        parameters:
+          type: object
+        results:
+          type: object
+    Traveller:
+      required:
+      - firstName
+      - lastName
+      - email
+      - nationality
+      - address
+      - passportNumber
+      type: object
+      properties:
+        firstName:
+          maxLength: 30
+          minLength: 2
+          pattern: \S
+          type: string
+        lastName:
+          maxLength: 30
+          minLength: 2
+          pattern: \S
+          type: string
+        email:
+          type: string
+        nationality:
+          pattern: \S
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        passportNumber:
+          pattern: \S
+          type: string
+    TravelsModel:
+      type: object
+      properties:
+        id:
+          type: string
+        flight:
+          $ref: '#/components/schemas/Flight'
+        trip:
+          $ref: '#/components/schemas/Trip'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        visaApplication:
+          $ref: '#/components/schemas/VisaApplication'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+        visaResolution:
+          $ref: '#/components/schemas/VisaResolution'
+    TravelsModelInput:
+      type: object
+      properties:
+        trip:
+          $ref: '#/components/schemas/Trip'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    TravelsModelOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        flight:
+          $ref: '#/components/schemas/Flight'
+        trip:
+          $ref: '#/components/schemas/Trip'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        visaApplication:
+          $ref: '#/components/schemas/VisaApplication'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+        visaResolution:
+          $ref: '#/components/schemas/VisaResolution'
+    Travels_7_TaskInput:
+      type: object
+      properties:
+        trip:
+          $ref: '#/components/schemas/Trip'
+        visaApplication:
+          $ref: '#/components/schemas/VisaApplication'
+        traveller:
+          $ref: '#/components/schemas/Traveller'
+    Travels_7_TaskModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        state:
+          format: int32
+          type: integer
+        phase:
+          type: string
+        phaseStatus:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/Travels_7_TaskInput'
+        results:
+          $ref: '#/components/schemas/Travels_7_TaskOutput'
+        params:
+          $ref: '#/components/schemas/Travels_7_TaskOutput'
+    Travels_7_TaskOutput:
+      type: object
+    Travels_9_TaskInput:
+      type: object
+      properties:
+        flight:
+          $ref: '#/components/schemas/Flight'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+    Travels_9_TaskModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        state:
+          format: int32
+          type: integer
+        phase:
+          type: string
+        phaseStatus:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/Travels_9_TaskInput'
+        results:
+          $ref: '#/components/schemas/Travels_9_TaskOutput'
+        params:
+          $ref: '#/components/schemas/Travels_9_TaskOutput'
+    Travels_9_TaskOutput:
+      type: object
+    Trip:
+      type: object
+      properties:
+        city:
+          type: string
+        country:
+          type: string
+        begin:
+          $ref: '#/components/schemas/Date'
+        end:
+          $ref: '#/components/schemas/Date'
+        visaRequired:
+          type: boolean
+    UriBuilder:
+      type: object
+    VisaApplication:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        duration:
+          format: int32
+          type: integer
+        passportNumber:
+          type: string
+        nationality:
+          type: string
+    VisaResolution:
+      type: object
+      properties:
+        approved:
+          type: boolean
+        reason:
+          type: string
+    HealthCheckResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          nullable: true
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/HealthCheckStatus'
+    HealthCheckStatus:
+      enum:
+      - DOWN
+      - UP
+      type: string
