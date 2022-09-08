@@ -6,6 +6,4 @@
         name: travels
         state: started
         image: org.kie.kogito/travels:2.0.0-SNAPSHOT
-        network_mode: bridge
-        ports:
-          - "9280:8280"
+        network_mode: host
