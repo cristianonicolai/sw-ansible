@@ -4,7 +4,7 @@
     - name: Deploy container
       community.docker.docker_container:
         name: travels
-        state: present
+        state: started
         image: org.kie.kogito/travels:sale
         ports:
           - 9080:9080

@@ -4,7 +4,7 @@
     - name: Deploy older release
       community.docker.docker_container:
         name: travels
-        state: present
+        state: started
         image: org.kie.kogito/travels:2.0.0-SNAPSHOT
         ports:
           - 9080:9080
