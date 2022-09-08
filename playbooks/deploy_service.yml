@@ -6,6 +6,11 @@
         name: travels
         state: started
         image: org.kie.kogito/travels:2.0.0-SNAPSHOT
-        network_mode: host
+        links:
+          - "infinispan:infinispan"
+          - "kafka:kafka"
         ports:
           - 9080
+        env:
+          QUARKUS_INFINISPAN_CLIENT_SERVER_LIST: infinispan:11222
+          KAFKA_BOOTSTRAP_SERVERS: kafka:29092
