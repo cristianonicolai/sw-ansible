@@ -1,8 +1,8 @@
-- name: Release sale event
+- name: Revert release
   hosts: all
   tasks:
     - name: Container present
       community.docker.docker_container:
         name: travels
         state: present
-        image: org.kie.kogito/travels:sale
+        image: org.kie.kogito/travels:2.0.0-SNAPSHOT
