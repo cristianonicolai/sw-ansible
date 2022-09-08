@@ -1,7 +1,5 @@
 - name: Check connection with Docker
   hosts: all
-  gather_facts: no
-  connection: local
   tasks:
     - name: Container present
       community.docker.docker_container:
