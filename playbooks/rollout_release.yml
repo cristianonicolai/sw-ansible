@@ -6,6 +6,6 @@
         name: travels
         state: present
         image: org.kie.kogito/travels:sale
-        network_mode: host
+        network_mode: default
         ports:
           - "9280:8280"

@@ -6,5 +6,5 @@
         name: travels
         image: org.kie.kogito/travels:sale
         state: started
-        network_mode: host
+        network_mode: default
         restart: true
