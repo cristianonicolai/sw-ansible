@@ -6,5 +6,6 @@
         name: travels
         state: present
         image: org.kie.kogito/travels:2.0.0-SNAPSHOT
+        network_mode: host
         ports:
           - "9280:8280"
