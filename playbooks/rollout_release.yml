@@ -1,0 +1,8 @@
+- name: Release sale event
+  hosts: all
+  tasks:
+    - name: Container present
+      community.docker.docker_container:
+        name: travels
+        state: present
+        image: org.kie.kogito/travels:2.0.0-SNAPSHOT
