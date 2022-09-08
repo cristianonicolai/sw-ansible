@@ -6,6 +6,8 @@
         name: travels
         state: present
         image: org.kie.kogito/travels:sale
-        network_mode: host
         ports:
-          - 9080
+          - 9080:9080
+        env:
+          QUARKUS_INFINISPAN_CLIENT_SERVER_LIST: host.docker.internal:11222
+          KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:9092

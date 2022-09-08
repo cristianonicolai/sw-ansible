@@ -6,15 +6,6 @@
         name: travels
         state: started
         image: org.kie.kogito/travels:2.0.0-SNAPSHOT
-#        networks:
-#          - name: demo-net
-#            links:
-#              - "infinispan:infinispan"
-#              - "kafka:kafka"
-#        network_mode: demo-net
-#        links:
-#          - "infinispan:infinispan"
-#          - "kafka:kafka"
         ports:
           - 9080:9080
         env:

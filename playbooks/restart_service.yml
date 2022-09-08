@@ -6,7 +6,9 @@
         name: travels
         image: org.kie.kogito/travels:sale
         state: started
-        network_mode: host
         restart: true
         ports:
-          - 9080
+          - 9080:9080
+        env:
+          QUARKUS_INFINISPAN_CLIENT_SERVER_LIST: host.docker.internal:11222
+          KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:9092
