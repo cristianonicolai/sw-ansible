@@ -8,3 +8,5 @@
         state: started
         network_mode: host
         restart: true
+        published_ports:
+          - 9080

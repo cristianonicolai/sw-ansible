@@ -7,3 +7,5 @@
         state: present
         image: org.kie.kogito/travels:sale
         network_mode: host
+        published_ports:
+          - 9080
