@@ -1,7 +1,7 @@
-- name: Revert release
+- name: Initial deploy
   hosts: all
   tasks:
-    - name: Deploy older release
+    - name: Container present
       community.docker.docker_container:
         name: travels
         state: present

@@ -1,10 +1,9 @@
-- name: Release sale event
+- name: Restart container
   hosts: all
   tasks:
-    - name: Deploy container
+    - name: Restart container
       community.docker.docker_container:
         name: travels
-        state: present
         image: org.kie.kogito/travels:sale
-        ports:
-          - "9280:8280"
+        state: started
+        restart: true
