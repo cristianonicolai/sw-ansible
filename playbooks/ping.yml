@@ -1,5 +1,5 @@
 - name: Check connection with Docker
-  hosts: ansible-demo
+  hosts: all
   tasks:
     - name: Container present
       community.docker.docker_container:
