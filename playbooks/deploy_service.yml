@@ -17,6 +17,6 @@
 #          - "kafka:kafka"
         ports:
           - 9080
-#        env:
-#          QUARKUS_INFINISPAN_CLIENT_SERVER_LIST: infinispan:11222
-#          KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+        env:
+          QUARKUS_INFINISPAN_CLIENT_SERVER_LIST: host.docker.internal:11222
+          KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:9092
